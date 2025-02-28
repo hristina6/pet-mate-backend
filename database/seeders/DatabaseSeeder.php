@@ -24,5 +24,11 @@ class DatabaseSeeder extends Seeder
         Category::factory(20)->create();
         Post::factory(20)->create();
         Comment::factory(20)->create();
+
+        User::query()->create([
+            'email' => 'admin@admin.com',
+            'password' => 'admin',
+            'name' => 'Admin',
+        ]);
     }
 }

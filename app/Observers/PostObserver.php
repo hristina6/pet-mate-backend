@@ -11,6 +11,7 @@ class PostObserver
     {
         $post->slug = Str::slug($post->title);
     }
+
     /**
      * Handle the Post "created" event.
      */

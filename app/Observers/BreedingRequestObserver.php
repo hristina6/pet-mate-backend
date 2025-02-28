@@ -11,6 +11,7 @@ class BreedingRequestObserver
     {
         $breedingRequest->status = BreedingRequestStatus::PENDING;
     }
+
     /**
      * Handle the BreedingRequest "created" event.
      */

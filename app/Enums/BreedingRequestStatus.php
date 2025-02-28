@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum BreedingRequestStatus : string
+enum BreedingRequestStatus: string
 {
     case PENDING = 'PENDING';
 

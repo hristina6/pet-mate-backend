@@ -11,6 +11,7 @@ class CategoryObserver
     {
         $category->slug = Str::slug($category->name);
     }
+
     /**
      * Handle the Category "created" event.
      */
