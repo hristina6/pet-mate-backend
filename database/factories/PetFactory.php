@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Enums\PetGender;
+use App\Enums\PetType;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -24,6 +25,7 @@ class PetFactory extends Factory
             'age' => $this->faker->numberBetween(1, 20),
             'has_pedigree' => $this->faker->boolean,
             'gender' => $this->faker->randomElement([PetGender::MALE->value, PetGender::FEMALE->value]),
+            'type' => $this->faker->randomElement([PetType::ADVERTISEMENT->value, PetType::BREEDING->value]),
             'image' => $this->faker->imageUrl(),
             'user_id' => User::factory(),
         ];
