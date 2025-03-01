@@ -14,7 +14,6 @@ class PetController extends Controller
 {
     public function index(Request $request): AnonymousResourceCollection
     {
-        $type = $request->input('type');
         $pets = Pet::query()
             ->when($request->input('type'), fn ($query, $type) => $query->where('type', $type))
             ->simplePaginate();

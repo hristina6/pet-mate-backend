@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
+use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -22,14 +22,13 @@ class CategoryController extends Controller
 
     public function show(Category $category): JsonResource
     {
-        return JsonResource::make($category);
-    }
+        $posts = Post::query()
+            ->whereBelongsTo($category)
+            ->simplePaginate();
 
-    public function store(CategoryRequest $request): JsonResource
-    {
-        $category = Category::query()
-            ->create($request->validated());
-
-        return JsonResource::make($category);
+        return JsonResource::make([
+            'posts' => $posts,
+            'category' => $category,
+        ]);
     }
 }

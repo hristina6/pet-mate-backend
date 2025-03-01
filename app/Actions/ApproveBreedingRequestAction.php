@@ -1,8 +1,9 @@
 <?php
+
 namespace App\Actions;
 
-use App\Models\BreedingRequest;
 use App\Enums\BreedingRequestStatus;
+use App\Models\BreedingRequest;
 
 class ApproveBreedingRequestAction
 {

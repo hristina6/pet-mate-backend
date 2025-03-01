@@ -23,7 +23,6 @@ class PetRequest extends FormRequest
             'has_pedigree' => ['required', 'boolean'],
             'gender' => ['required', new Enum(PetGender::class)],
             'image' => ['required', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
-            'user_id' => ['required', 'exists:users,id'],
         ];
     }
 }

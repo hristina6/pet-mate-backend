@@ -60,12 +60,9 @@ class BreedingRequestResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                //
             ]);
     }
 
@@ -80,9 +77,7 @@ class BreedingRequestResource extends Resource
     {
         return [
             'index' => Pages\ListBreedingRequests::route('/'),
-            'create' => Pages\CreateBreedingRequest::route('/create'),
             'view' => Pages\ViewBreedingRequest::route('/{record}'),
-            'edit' => Pages\EditBreedingRequest::route('/{record}/edit'),
         ];
     }
 }

@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\BreedingRequestResource\Pages;
 
 use App\Filament\Resources\BreedingRequestResource;
-use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 
 class ListBreedingRequests extends ListRecords
@@ -13,7 +12,7 @@ class ListBreedingRequests extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            //
         ];
     }
 }

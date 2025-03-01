@@ -10,6 +10,7 @@ class PostObserver
     public function creating(Post $post): void
     {
         $post->slug = Str::slug($post->title);
+        $post->user()->associate(auth()->user());
     }
 
     /**

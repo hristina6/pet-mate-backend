@@ -10,6 +10,7 @@ class BreedingRequestObserver
     public function creating(BreedingRequest $breedingRequest): void
     {
         $breedingRequest->status = BreedingRequestStatus::PENDING;
+        $breedingRequest->user()->associate(auth()->user());
     }
 
     /**

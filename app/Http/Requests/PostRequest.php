@@ -17,8 +17,6 @@ class PostRequest extends FormRequest
             'title' => ['required', 'string', 'max:255'],
             'slug' => ['required', 'string', 'unique:posts,slug'],
             'body' => ['required', 'string'],
-            'user_id' => ['required', 'exists:users,id'],
-            'category_id' => ['required', 'exists:categories,id'],
         ];
     }
 }

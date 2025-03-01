@@ -2,10 +2,9 @@
 
 namespace App\Http\Requests;
 
-use App\Enums\BreedingRequestStatus;
 use Illuminate\Foundation\Http\FormRequest;
 
-class BreedingRequestRequest extends FormRequest
+class RegisterRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -15,9 +14,9 @@ class BreedingRequestRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'status' => 'required|in:'.implode(',', array_map(fn ($status) => $status->value, BreedingRequestStatus::cases())),
-            'note' => 'nullable|string|max:500',
-            'pet_id' => 'required|exists:pets,id',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6',
+            'name' => 'required|string|max:255',
         ];
     }
 }
