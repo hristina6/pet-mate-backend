@@ -52,7 +52,7 @@ class User extends Authenticatable implements FilamentUser
 
     public function password(): Attribute
     {
-        return Attribute::set(fn ($val) => bcrypt($val));
+        return Attribute::set(fn ($val) => ($val));
     }
 
     public function pets(): HasMany

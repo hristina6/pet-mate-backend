@@ -13,7 +13,7 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::prefix('/v1')->middleware('auth:sanctum')->group(function () {
+Route::prefix('/v1')->group(function () {
     Route::apiResource('pets', PetController::class)->only(['index', 'show', 'store', 'update']);
     Route::apiResource('categories', CategoryController::class);
     Route::apiResource('categories.posts', PostController::class);
