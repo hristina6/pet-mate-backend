@@ -15,9 +15,11 @@ Route::get('/user', function (Request $request) {
 
 Route::prefix('/v1')->group(function () {
     Route::apiResource('pets', PetController::class)->only(['index', 'show', 'store', 'update']);
+    Route::get('/posts', [PostController::class, 'index']);
     Route::apiResource('categories', CategoryController::class);
     Route::apiResource('categories.posts', PostController::class);
     Route::apiResource('categories.posts.comments', CommentController::class);
+    Route::get('/categories/{category}/posts', [PostController::class, 'categoryIndex']);
     Route::apiResource('breeding-requests', BreedingRequestController::class);
     Route::prefix('/breeding-requests/{breedingRequest}')->group(function () {
         Route::put('/approve', [BreedingRequestController::class, 'approve']);

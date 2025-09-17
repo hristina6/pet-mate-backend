@@ -13,15 +13,26 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class PostController extends Controller
 {
-    public function index(Category $category, Request $request): AnonymousResourceCollection
+    public function index(Request $request): AnonymousResourceCollection
     {
         $posts = Post::query()
-            ->whereBelongsTo($category)
-            ->when($request->input('title'), fn ($query, $title) => $query->where('title', 'like', "%$title%"))
+            ->with(['user', 'category']) // Eager load relationships
+            ->when($request->input('user_id'), function ($query, $userId) {
+                return $query->where('user_id', $userId);
+            })
+            ->when($request->input('category_id'), function ($query, $categoryId) {
+                return $query->where('category_id', $categoryId);
+            })
+            ->when($request->input('title'), function ($query, $title) {
+                return $query->where('title', 'like', "%$title%");
+            })
+            ->orderBy('created_at', 'desc')
             ->simplePaginate();
 
         return JsonResource::collection($posts);
     }
+
+    // In your PostController index method
 
     public function show(Category $category, Post $post): JsonResource
     {
@@ -30,7 +41,14 @@ class PostController extends Controller
 
     public function store(Category $category, PostRequest $request): JsonResource
     {
-        $post = new Post($request->validated());
+        $postData = $request->validated();
+
+        // Add user_id to the post data if provided in the request
+        if ($request->has('user_id')) {
+            $postData['user_id'] = $request->input('user_id');
+        }
+
+        $post = new Post($postData);
         $post->category()->associate($category);
         $post->save();
 

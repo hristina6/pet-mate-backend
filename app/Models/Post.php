@@ -2,18 +2,20 @@
 
 namespace App\Models;
 
-use App\Observers\PostObserver;
-use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
-#[ObservedBy(PostObserver::class)]
 class Post extends Model
 {
     use HasFactory;
-
+    protected $fillable = [
+        'title',
+        'slug',
+        'body',
+        'user_id', // Make sure this is included
+        'category_id',
+    ];
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -22,10 +24,5 @@ class Post extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
-    }
-
-    public function comments(): HasMany
-    {
-        return $this->hasMany(Comment::class);
     }
 }

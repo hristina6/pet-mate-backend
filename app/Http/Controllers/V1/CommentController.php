@@ -15,6 +15,7 @@ class CommentController extends Controller
     public function index(Category $category, Post $post): AnonymousResourceCollection
     {
         $comments = Comment::query()
+            ->with(['user'])
             ->whereBelongsTo($post)
             ->get();
 
@@ -23,13 +24,22 @@ class CommentController extends Controller
 
     public function store(Category $category, Post $post, CommentRequest $request): JsonResource
     {
-        $comment = new Comment($request->validated());
+        $commentData = $request->validated();
+
+        // Add user_id to the comment data if provided in the request
+        if ($request->has('user_id')) {
+            $commentData['user_id'] = $request->input('user_id');
+        }
+
+        $comment = new Comment($commentData);
         $comment->post()->associate($post);
         $comment->save();
 
+        // Load the user relationship for the response
+        $comment->load('user');
+
         return JsonResource::make($comment);
     }
-
     public function destroy(Category $category, Post $post, Comment $comment): JsonResource
     {
         $comment->delete();
