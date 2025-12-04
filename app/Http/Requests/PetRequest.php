@@ -22,8 +22,9 @@ class PetRequest extends FormRequest
             'age' => ['required', 'integer', 'min:0', 'max:50'],
             'has_pedigree' => ['required', 'boolean'],
             'gender' => ['required', new Enum(PetGender::class)],
-            'image' => ['required', 'string'],
-            'user_id' => ['required', 'exists:users,id']
+            'image' => ['nullable', 'string', 'url'],
+            'user_id' => ['required', 'exists:users,id'],
+            'location' => ['nullable', 'string', 'max:255'],
         ];
     }
 }

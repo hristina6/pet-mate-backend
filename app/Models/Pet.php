@@ -13,6 +13,10 @@ class Pet extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'location'
+    ];
+
     protected $casts = [
         'gender' => PetGender::class,
         'type' => PetType::class,

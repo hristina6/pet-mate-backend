@@ -37,6 +37,10 @@ class PetResource extends Resource
                 Forms\Components\Select::make('user_id')
                     ->relationship('user', 'name')
                     ->required(),
+                Forms\Components\TextInput::make('location')
+                    ->label('Location')
+                    ->nullable()
+                    ->maxLength(255),
             ]);
     }
 
@@ -67,6 +71,10 @@ class PetResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('location')
+                    ->label('Location')
+                    ->searchable(),
+
             ])
             ->filters([
                 //

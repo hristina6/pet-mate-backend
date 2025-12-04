@@ -28,6 +28,7 @@ class PetFactory extends Factory
             'type' => $this->faker->randomElement([PetType::ADVERTISEMENT->value, PetType::BREEDING->value]),
             'image' => $this->faker->imageUrl(),
             'user_id' => User::factory(),
+            'location' => $this->faker->city(),
         ];
     }
 }
