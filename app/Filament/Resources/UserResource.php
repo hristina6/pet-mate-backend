@@ -27,6 +27,11 @@ class UserResource extends Resource
                 Forms\Components\TextInput::make('email')
                     ->email()
                     ->required(),
+                Forms\Components\TextInput::make('contact')
+                    ->label('Contact Number')
+                    ->tel() // Makes it a telephone input on mobile
+                    ->nullable() // Makes it non-required
+                    ->maxLength(10),
                 Forms\Components\DateTimePicker::make('email_verified_at'),
                 Forms\Components\TextInput::make('password')
                     ->password()
@@ -42,6 +47,9 @@ class UserResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('contact')
+                    ->searchable()
+                    ->toggleable(),
                 Tables\Columns\TextColumn::make('email_verified_at')
                     ->dateTime()
                     ->sortable(),
