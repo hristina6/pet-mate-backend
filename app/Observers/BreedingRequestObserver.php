@@ -9,8 +9,10 @@ class BreedingRequestObserver
 {
     public function creating(BreedingRequest $breedingRequest): void
     {
-        $breedingRequest->status = BreedingRequestStatus::PENDING;
-        $breedingRequest->user()->associate(auth()->user());
+        // Status is already set in controller, but ensure it's PENDING
+        if (!$breedingRequest->status) {
+            $breedingRequest->status = BreedingRequestStatus::PENDING;
+        }
     }
 
     /**

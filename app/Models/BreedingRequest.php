@@ -15,6 +15,13 @@ class BreedingRequest extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'status',
+        'note',
+        'pet_id',
+        'user_id', // Make sure this is included
+    ];
+
     protected $casts = [
         'status' => BreedingRequestStatus::class,
     ];

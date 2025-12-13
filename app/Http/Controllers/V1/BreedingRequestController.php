@@ -4,6 +4,7 @@ namespace App\Http\Controllers\V1;
 
 use App\Actions\ApproveBreedingRequestAction;
 use App\Actions\RejectBreedingRequestAction;
+use App\Enums\BreedingRequestStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BreedingRequestRequest;
 use App\Models\BreedingRequest;
@@ -14,18 +15,24 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class BreedingRequestController extends Controller
 {
-    public function index(Request $request): AnonymousResourceCollection
+    public function index(Request $request)
     {
-        $breedingRequests = BreedingRequest::query()
-            ->mine()
-            ->simplePaginate();
+        $breedingRequests = BreedingRequest::with('pet')->simplePaginate();
 
-        return JsonResource::collection($breedingRequests);
+        // Convert to array to ensure relationships are included
+        $data = $breedingRequests->toArray();
+
+        return response()->json($data);
     }
-
     public function store(BreedingRequestRequest $request): JsonResource
     {
-        $breedingRequest = BreedingRequest::query()->create($request->validated());
+        // Create breeding request with validated data including user_id
+        $breedingRequest = BreedingRequest::query()->create([
+            'status' => BreedingRequestStatus::PENDING, // Always set to PENDING
+            'note' => $request->input('note', ''),
+            'pet_id' => $request->input('pet_id'),
+            'user_id' => $request->input('user_id'), // Use user_id from request
+        ]);
 
         return JsonResource::make($breedingRequest);
     }

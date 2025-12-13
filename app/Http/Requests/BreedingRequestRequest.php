@@ -18,6 +18,7 @@ class BreedingRequestRequest extends FormRequest
             'status' => 'required|in:'.implode(',', array_map(fn ($status) => $status->value, BreedingRequestStatus::cases())),
             'note' => 'nullable|string|max:500',
             'pet_id' => 'required|exists:pets,id',
+            'user_id' => 'required|exists:users,id'
         ];
     }
 }
