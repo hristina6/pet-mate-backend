@@ -8,7 +8,9 @@ class CommentObserver
 {
     public function creating(Comment $comment): void
     {
-        $comment->user()->associate(auth()->user());
+        if (!$comment->user_id && auth()->check()) {
+            $comment->user()->associate(auth()->user());
+        }
     }
 
     /**
