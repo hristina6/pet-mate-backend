@@ -50,26 +50,37 @@ class BreedingRequestController extends Controller
     /**
      * @throws AuthorizationException
      */
-    public function approve(BreedingRequest $breedingRequest): JsonResource
+    public function approve(Request $request, BreedingRequest $breedingRequest): JsonResource
     {
-        $this->authorize('approveOrReject', $breedingRequest);
-        (new ApproveBreedingRequestAction)->execute($breedingRequest);
+        // Земи го user_id од request body
+        $userId = $request->input('user_id');
 
-        return JsonResource::make([
-            'message' => __('The breeding request has been approved successfully!'),
-        ]);
+        // Провери дали овој user е сопственик на миленичето
+        if ($userId && $breedingRequest->pet->user_id == $userId) {
+            (new ApproveBreedingRequestAction)->execute($breedingRequest);
+            return JsonResource::make([
+                'message' => __('The breeding request has been approved successfully!'),
+            ]);
+        }
+
+        throw new AuthorizationException('This action is unauthorized.');
     }
-
     /**
      * @throws AuthorizationException
      */
-    public function reject(BreedingRequest $breedingRequest): JsonResource
+    public function reject(Request $request, BreedingRequest $breedingRequest): JsonResource
     {
-        $this->authorize('approveOrReject', $breedingRequest);
-        (new RejectBreedingRequestAction)->execute($breedingRequest);
+        // Земи го user_id од request body
+        $userId = $request->input('user_id');
 
-        return JsonResource::make([
-            'message' => __('The breeding request has been rejected successfully!'),
-        ]);
+        // Провери дали овој user е сопственик на миленичето
+        if ($userId && $breedingRequest->pet->user_id == $userId) {
+            (new RejectBreedingRequestAction)->execute($breedingRequest);
+            return JsonResource::make([
+                'message' => __('The breeding request has been rejected successfully!'),
+            ]);
+        }
+
+        throw new AuthorizationException('This action is unauthorized.');
     }
 }
