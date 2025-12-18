@@ -17,7 +17,7 @@ class BreedingRequestController extends Controller
 {
     public function index(Request $request)
     {
-        $breedingRequests = BreedingRequest::with('pet')->simplePaginate();
+        $breedingRequests = BreedingRequest::with('pet','user')->simplePaginate();
 
         // Convert to array to ensure relationships are included
         $data = $breedingRequests->toArray();
